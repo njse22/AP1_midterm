@@ -11,7 +11,20 @@ public class TestCases {
 		createBig();
 	}
 	private void createBig() {
-		// TODO Auto-generated method stub
+		String[][] big = 
+			{
+					{"S", "O", "T", "A", "N", "0", " ", 
+						"O", "R", "C", "A", " ",
+						"A", "S", "A"
+					},
+					{"I", " ", 
+					 "U", "S", "A", "R", "A", "N", " ",
+					 "A", "M", "A","N","A","L"
+					 },
+					{"L", "T", " ", " ", " ",
+				     "O", "R", "D", "E", "N", "A", "R", " ", " ", "A"}
+		};
+		this.big = big;
 		
 	}
 	private void createMedium() {

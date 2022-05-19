@@ -71,27 +71,42 @@ public class CrosswordController {
 		int columns= crossword[0].length;
 	
 		String out="";
-		String separator = "+--+ ";
-		String line = "" + String.join("", Collections.nCopies(rows, separator));
+		String separator = "+---+ ";
+		String line = "" + String.join("", Collections.nCopies(columns, separator));
 		
 		
 		String numbers ="";
 		String letters = "";
+		int count =0;
 		for(int i=0 ;i<rows ; i++) {
 			numbers ="";
 			letters ="";
-			for(int j=0 ;j<rows ; j++) {
+			for(int j=0 ;j<columns ; j++) {
+				count++;
 				Cell actual = crossword[i][j];
-				//empty cell
-				if (actual.getState()==CellType.BLACK) {
-					numbers += " --- ";
-					letters += " --- ";
-					
-				}
-				//letter cell
-				else {
-					numbers += " "+actual.getNumber() +"   ";
-					letters += "   "+ actual.getLetter() + " ";
+				
+				// numeros de dos cifras
+				if (count>10) {
+					//empty cell
+					if (actual.getState()==CellType.BLACK) {
+						numbers += " ---  ";
+						letters += " ---  ";
+						
+					}else {
+						numbers += " "+actual.getNumber() +"   ";
+						letters += "    "+ actual.getLetter() + " ";
+					}
+				}else //una cifra
+				{
+					//empty cell
+					if (actual.getState()==CellType.BLACK) {
+						numbers += " ---  ";
+						letters += " ---  ";
+						
+					}else {
+						numbers += " "+actual.getNumber() +"    ";
+						letters += "    "+ actual.getLetter() + " ";
+					}
 				}
 			}
 			//por cada fila se imprimen las lineas

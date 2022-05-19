@@ -4,11 +4,10 @@
  */
 
 package ui;
-import java.util.Collections;
+
 import java.util.Scanner;
 
-import model.Cell;
-import model.CellType;
+
 import model.CrosswordController;
 
 
