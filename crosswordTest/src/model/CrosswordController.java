@@ -19,9 +19,30 @@ public class CrosswordController {
 	 * the initial state of a crossword puzzle
 	 */
 	public void initCrossword(String[][] puzzle) {
-		
-		
+		// Inicialar la matriz de celdas con el tamaño de la 
+		// matriz de Strings 
+		crossword = new Cell[puzzle.length][puzzle[0].length];
+		int count = 0; 
+		for (int i = 0; i < puzzle.length; i++) {
+			for (int j = 0; j < puzzle[0].length; j++) {
+				// si la letra que hay en puzzle es igual a 
+				// un string vacio, la celda de crossword
+				// es BLACK
+				if(!puzzle[i][j].equals(" ")){
+					// el número de la celda puede ser cualquiera (0 por ejemplo) 
+					// en este caso, puse -1.
+					count++; 
+					crossword[i][j] = 
+						new Cell(CellType.CLOSED, puzzle[i][j], count);
+				}
+				else{
+					crossword[i][j] = 
+						new Cell(CellType.BLACK, puzzle[i][j], -1); 
+				}
+			}
+		}
 	}
+
 	/**
 	 * Method to verify if a crossword puzzle is initialized
 	 * @return boolean, true if it is initialized, else false
@@ -51,8 +72,18 @@ public class CrosswordController {
 	 * @return
 	 */
 	public String getHint(String letter) {
-		
-		return null;
+		String msj = "Lo siento, no hay palabras con esa " + letter;
+
+		for (int i = 0; i < crossword.length; i++) {
+			for (int j = 0; j < crossword[0].length; j++) {
+				if(crossword[i][j].getLetter().equalsIgnoreCase(letter)){
+					msj = "“Hay una palabra con la letra: "+letter+
+						" en el crucigrama en la casilla: " 
+						+crossword[i][j].getNumber();
+				}
+			}
+		}
+		return msj;
 	}
 	
 	/**
@@ -62,8 +93,23 @@ public class CrosswordController {
 	 * @return
 	 */
 	public String evaluateCell(String letter, int num) {
-		
-		return null;
+		String msj = " Lo siento, la letra "+letter
+			+" NO está en la casilla: "+ num; 
+
+		boolean isFound = false;
+
+		for (int i = 0; i < crossword.length && !isFound; i++) {
+			for (int j = 0; j < crossword[0].length && !isFound; j++) {
+				if(crossword[i][j].getNumber() == num){
+					isFound = true;
+					if(crossword[i][j].getLetter().equalsIgnoreCase(letter)){
+						msj = " La "+letter+" SI está en la casilla: "
+							+ crossword[i][j].getNumber();
+					}
+				}
+			}
+		}
+		return msj;
 	}
 	
 	public String showCrossword() {
@@ -92,20 +138,27 @@ public class CrosswordController {
 						numbers += " ---  ";
 						letters += " ---  ";
 						
+					}else if(actual.getState() == CellType.CLOSED){
+						numbers += " "+actual.getNumber() +"   ";
+
 					}else {
 						numbers += " "+actual.getNumber() +"   ";
 						letters += "    "+ actual.getLetter() + " ";
 					}
-				}else //una cifra
+				}
+				else //una cifra
 				{
 					//empty cell
 					if (actual.getState()==CellType.BLACK) {
 						numbers += " ---  ";
 						letters += " ---  ";
-						
+
+					}else if(actual.getState() == CellType.CLOSED){
+						numbers += " "+actual.getNumber() +"   ";
+
 					}else {
 						numbers += " "+actual.getNumber() +"    ";
-						letters += "    "+ actual.getLetter() + " ";
+						letters += "    "+ actual.getLetter() + " "; 
 					}
 				}
 			}
